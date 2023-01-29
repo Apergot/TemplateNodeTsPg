@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  api:
+    container_name: ${PROJECT_NAME}-${PROJECT_ENV}-${PROJECT_COMPONENT}-api
+    restart: always
+    build: .
+    ports:
+      - ${WEB_EXTERNAL_PORT}:${WEB_EXTERNAL_PORT}
+    depends_on:
+      - db
+    volumes:
+    - .:/usr/src/app
+
+  db:
+    container_name: ${PROJECT_NAME}-${PROJECT_ENV}-${PROJECT_COMPONENT}-db
+    image: postgres:13.1
+    shm_size: 1g
+    ports:
+      - ${DB_EXTERNAL_PORT}:5432
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata:cached
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+      
+
+volumes: 
+ db:
