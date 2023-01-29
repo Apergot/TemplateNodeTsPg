@@ -17,8 +17,6 @@ export class RegisterNewUserAction {
         const salt = crypto.randomBytes(16).toString('hex');
         const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, `sha512`).toString(`hex`);
 
-            //to check for correct pass => var hash = crypto.pbkdf2Sync(password,  this.salt, 1000, 64, `sha512`).toString(`hex`) and compare hashes; 
-
         const newUser = await this.userQuery.createNewUser(email, hashedPassword, salt);
 
         if (newUser !== null) {

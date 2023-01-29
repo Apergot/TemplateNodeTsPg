@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const UserRegistrationValidation = [
+export const UserCredentialsValidation = [
     body('email').isEmail().withMessage('Please provide valid email'),
     body('password')
         .isLength({ min: 4, max: 20 })

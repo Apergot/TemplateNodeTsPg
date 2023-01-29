@@ -5,4 +5,5 @@ export interface User {
     username: string;
     createdOn: string;
     lastLogin: string;
+    salt: string;
 }
