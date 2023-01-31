@@ -27,6 +27,6 @@ export class LoginUserAction {
             email: user.email
         };
 
-        return jsonwebtoken.sign(payload, secret, {expiresIn: '2 days'});
+        return jsonwebtoken.sign(payload, secret, {expiresIn: '24h'});
     }
 }

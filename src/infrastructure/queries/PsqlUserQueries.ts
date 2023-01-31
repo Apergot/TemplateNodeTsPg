@@ -10,6 +10,23 @@ export class PsqlUserQueries implements UserQuery {
         this.logger = new APILogger;
     }
 
+    async findUserById(id: number): Promise<User | null >{    
+        const client = connect();
+        await client
+            .connect()
+            .catch((err) => this.logger.error(err));
+
+        const {rows} = await client.query(`SELECT * FROM users WHERE id = $1`, [id]);
+        await client.end();    
+        
+        if (rows.length > 0) {
+            return rows[0];    
+        } else {
+            return null    
+        }
+    }
+
+
     async findUserByEmail(email: string): Promise<User | null >{    
         const client = connect();
         await client
@@ -40,7 +57,6 @@ export class PsqlUserQueries implements UserQuery {
         await client.end();
 
         if (rows.length > 0) {
-            console.log('Result of creating' + rows[0]);
             return rows[0];    
         } else {
             return null    

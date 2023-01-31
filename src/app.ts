@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { UserController } from './business/controllers/user.controller';
 import { errorHandler } from './business/middlewares/errorHandler';
 import { NotFoundError } from './business/utils/errors/NotFoundError';
+import { validateToken } from './business/middlewares/validateToken';
 
 class App { 
 
@@ -26,9 +27,12 @@ class App {
     }
 
     private setControllers(){
+
         const userController = new UserController();
         this.express.use('/api/users', userController.router);
 
+        this.express.use(validateToken);
+        
         this.express.all('/*', () => {
             throw new NotFoundError();
         });

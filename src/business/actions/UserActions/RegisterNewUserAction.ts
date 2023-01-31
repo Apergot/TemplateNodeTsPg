@@ -25,6 +25,4 @@ export class RegisterNewUserAction {
         
         return null;
     }
-
-    //TODO: validate user and persist
 }
